@@ -2,6 +2,7 @@ package sk.upjs.ics.presentr2017;
 
 import android.app.LoaderManager;
 import android.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +13,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<User>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<User>>, SwipeRefreshLayout.OnRefreshListener {
     private ListView userListView;
 
     private ArrayAdapter<User> userListViewAdapter;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         this.userListView = (ListView) findViewById(R.id.userListView);
         this.userListView.setAdapter(this.userListViewAdapter);
+
+        this.swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        this.swipeRefreshLayout.setOnRefreshListener(this);
 
         getLoaderManager().restartLoader(0, Bundle.EMPTY, this);
     }
@@ -49,5 +55,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<List<User>> loader) {
         this.userListViewAdapter.clear();
+    }
+
+    @Override
+    public void onRefresh() {
+        this.getLoaderManager().restartLoader(0, Bundle.EMPTY, this);
+        this.swipeRefreshLayout.setRefreshing(false);
     }
 }
