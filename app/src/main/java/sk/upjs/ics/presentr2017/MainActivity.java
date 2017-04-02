@@ -2,6 +2,7 @@ package sk.upjs.ics.presentr2017;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,5 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
         this.userListView = (ListView) findViewById(R.id.userListView);
         this.userListView.setAdapter(this.userListViewAdapter);
+    }
+
+    public void onFloatingActionButtonClick(View view) {
+
     }
 }
