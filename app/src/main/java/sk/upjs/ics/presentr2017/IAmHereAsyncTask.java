@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 import java.io.IOException;
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class IAmHereAsyncTask extends AsyncTask<String, Void, Boolean> {
     public static final String TAG = IAmHereAsyncTask.class.getCanonicalName();
