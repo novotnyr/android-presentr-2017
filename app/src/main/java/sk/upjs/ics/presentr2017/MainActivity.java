@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         this.swipeRefreshLayout.setOnRefreshListener(this);
 
         getLoaderManager().restartLoader(0, Bundle.EMPTY, this);
+
+        PresenceScheduler.schedule(this);
     }
 
     public void onFloatingActionButtonClick(View view) {
