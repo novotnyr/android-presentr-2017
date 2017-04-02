@@ -1,7 +1,12 @@
 package sk.upjs.ics.presentr2017;
 
 import android.app.LoaderManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private RefreshUsersBroadcastReceiver refreshUsersBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +43,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getLoaderManager().restartLoader(0, Bundle.EMPTY, this);
 
         PresenceScheduler.schedule(this);
+
+        this.refreshUsersBroadcastReceiver = new RefreshUsersBroadcastReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        IntentFilter intentFilter = new IntentFilter("PRESENTR_REFRESH_USERS");
+        LocalBroadcastManager.getInstance(this).registerReceiver(this.refreshUsersBroadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(this.refreshUsersBroadcastReceiver);
+
+        super.onPause();
     }
 
     public void onFloatingActionButtonClick(View view) {
@@ -63,5 +87,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onRefresh() {
         this.getLoaderManager().restartLoader(0, Bundle.EMPTY, this);
         this.swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private class RefreshUsersBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            List<User> users = (List<User>) intent.getSerializableExtra("USERS");
+            MainActivity.this.userListViewAdapter.clear();
+            MainActivity.this.userListViewAdapter.addAll(users);
+        }
     }
 }

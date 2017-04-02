@@ -5,9 +5,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,9 +32,19 @@ public class UserListLoaderService extends IntentService {
             Call<List<User>> call = api.getUsers();
             List<User> users = call.execute().body();
             triggerNotification(users);
+            broadcast(users);
+
         } catch (IOException e) {
             Log.e(TAG, "Unable to load user", e);
         }
+    }
+
+    private void broadcast(List<User> users) {
+        Intent intent = new Intent("PRESENTR_REFRESH_USERS");
+        intent.putExtra("USERS", (Serializable) users);
+
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+        broadcastManager.sendBroadcast(intent);
     }
 
     @SuppressWarnings("deprecation")
