@@ -1,6 +1,8 @@
 package sk.upjs.ics.presentr2017;
 
-class User {
+import java.io.Serializable;
+
+class User implements Serializable {
     private String login;
 
     public User() {
