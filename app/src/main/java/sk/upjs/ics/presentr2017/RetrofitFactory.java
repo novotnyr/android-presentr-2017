@@ -5,7 +5,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RetrofitFactory {
     public static Retrofit getRetrofit() {
-        String baseUrl = "http://ics.upjs.sk/~novotnyr/android/demo/presentr/index.php/available-users";
+        String baseUrl = "http://ics.upjs.sk/~novotnyr/android/demo/presentr/index.php/available-users/";
 
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
