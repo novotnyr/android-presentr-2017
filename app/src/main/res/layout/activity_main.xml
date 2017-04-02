@@ -19,6 +19,7 @@
         app:layout_anchorGravity="bottom|right|end"
         app:layout_anchor="@id/userListView"
 
+        android:layout_margin="@dimen/fab_margin"
 
         android:src="@android:drawable/ic_input_add"
         android:onClick="onFloatingActionButtonClick"
