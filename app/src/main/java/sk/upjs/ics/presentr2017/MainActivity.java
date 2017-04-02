@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onFloatingActionButtonClick(View view) {
-
+        String userName = "android";
+        new IAmHereAsyncTask().execute(userName);
     }
 }
