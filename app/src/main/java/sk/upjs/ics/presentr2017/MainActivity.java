@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onResume() {
         super.onResume();
 
-        IntentFilter intentFilter = new IntentFilter("PRESENTR_REFRESH_USERS");
+        IntentFilter intentFilter = new IntentFilter(Constants.REFRESH_USERS_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(this.refreshUsersBroadcastReceiver, intentFilter);
     }
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private class RefreshUsersBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            List<User> users = (List<User>) intent.getSerializableExtra("USERS");
+            List<User> users = (List<User>) intent.getSerializableExtra(Constants.REFRESH_USERS_EXTRA);
             MainActivity.this.userListViewAdapter.clear();
             MainActivity.this.userListViewAdapter.addAll(users);
         }

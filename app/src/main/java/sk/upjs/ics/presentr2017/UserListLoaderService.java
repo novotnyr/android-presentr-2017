@@ -40,8 +40,8 @@ public class UserListLoaderService extends IntentService {
     }
 
     private void broadcast(List<User> users) {
-        Intent intent = new Intent("PRESENTR_REFRESH_USERS");
-        intent.putExtra("USERS", (Serializable) users);
+        Intent intent = new Intent(Constants.REFRESH_USERS_ACTION);
+        intent.putExtra(Constants.REFRESH_USERS_EXTRA, (Serializable) users);
 
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         broadcastManager.sendBroadcast(intent);
