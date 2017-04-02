@@ -9,7 +9,7 @@ import retrofit2.http.Path;
 
 public interface Api {
     @POST("available-users/{userName}")
-    Call<Void> register(@Path("username") String username);
+    Call<Void> register(@Path("userName") String userName);
 
     @GET("available-users")
     Call<List<User>> getUsers();
